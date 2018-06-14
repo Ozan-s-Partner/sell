@@ -14,6 +14,8 @@ import com.ozan.repository.OrderDetailRepository;
 import com.ozan.repository.OrderMasterRepository;
 import com.ozan.service.OrderService;
 import com.ozan.service.ProductService;
+import com.ozan.service.PushMessageService;
+import com.ozan.service.WebSocket;
 import com.ozan.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -51,11 +53,11 @@ public class OrderServiceImpl implements OrderService {
     //@Autowired
     //private PayService payService;
 
-    //@Autowired
-    //private PushMessageService pushMessageService;
+    @Autowired
+    private PushMessageService pushMessageService;
 
-    //@Autowired
-    //private WebSocket webSocket;
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -105,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
         productService.decreaseStock(cartDTOList);
 
         //发送websocket消息
-        //webSocket.sendMessage(orderDTO.getOrderId());
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }
@@ -197,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //推送微信模版消息
-        //pushMessageService.orderStatus(orderDTO);
+        pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }

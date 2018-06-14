@@ -45,7 +45,7 @@ public class OrderMasterRepositoryTest {
 
     @Test
     public void findByBuyerOpenid() throws Exception {
-        PageRequest request=new PageRequest(1,3);
+        PageRequest request=new PageRequest(0,3);
 
         Page<OrderMaster> orderMasterPage=repository.findByBuyerOpenid(OPENID,request);
         System.out.println(orderMasterPage.getTotalElements());
